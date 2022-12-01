@@ -8,17 +8,17 @@ import java.util.List;
 
 @Component
 public class CarService {
-    private final Storage magazynSamochodow;
+    private final CarStorage carStorage;
     private final RentalStorage rentalStorage;
 
 
-    public CarService(Storage magazynSamochodow, RentalStorage rentalStorage) {
-        this.magazynSamochodow = magazynSamochodow;
+    public CarService(CarStorage carStorage, RentalStorage rentalStorage) {
+        this.carStorage = carStorage;
         this.rentalStorage = rentalStorage;
     }
 
     public List<Car> getAllCars() {
-        return magazynSamochodow.getCarList();
+        return carStorage.getCarList();
     }
 
     public List<Rental> getAllRentals() {
@@ -27,12 +27,12 @@ public class CarService {
 
     private double calculation(long days, CarType carType) {
         double basePrice = 10;
-        double mnoznik = 10.5;
+        double multiplier = 10.5;
 
         if (carType.equals(CarType.STANDARD)) {
             return days * basePrice;
         } else {
-            return days * basePrice * mnoznik;
+            return days * basePrice * multiplier;
         }
     }
 
@@ -40,7 +40,7 @@ public class CarService {
     //zwroc RentalInfo
     //do parametrow dodac LocalDate, StartDate, EndDate
     public RentalInfo rentCar(User user, String vin, LocalDate startDate, LocalDate endDate) {
-        Car car = magazynSamochodow.findCar(vin);
+        Car car = carStorage.findCar(vin);
         List<Rental> rentalList = rentalStorage.getRentalList();
         for (Rental rental : rentalList) {
             if (rental.getCar().getVin().equals(car.getVin())) {

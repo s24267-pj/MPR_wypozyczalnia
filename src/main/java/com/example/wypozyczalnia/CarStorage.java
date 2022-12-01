@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class Storage {
+public class CarStorage {
 
     private Car fordMondeo = new Car("ford", "mondeo", "aabbcc", CarType.STANDARD);
     private Car volkswagenTouareg = new Car("volkswagen", "touareg", "ddeeff", CarType.PREMIUM);
@@ -18,7 +18,7 @@ public class Storage {
         return carList;
     }
 
-    public Storage() {
+    public CarStorage() {
         carList.add(fordMondeo);
         carList.add(volkswagenTouareg);
         carList.add(fordExplorer);
