@@ -12,8 +12,8 @@ public class WypozyczalniaApplication {
     public WypozyczalniaApplication(CarService carService) {
         this.carService = carService;
 
-        carService.rentCar(new User("adam"), "aabbcc", LocalDate.now(), LocalDate.of(2022,12,10));
-        //carService.rentCar(new User("adam"), "aabbcc");
+        carService.rentCar(new User("polik"), "ddeeff", LocalDate.now(), LocalDate.of(2022,12,10));
+        //carService.rentCar(new User("jan"), "ddeeff", LocalDate.now(), LocalDate.of(2022,12,15));
 
     }
 

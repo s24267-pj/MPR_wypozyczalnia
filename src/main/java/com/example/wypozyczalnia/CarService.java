@@ -42,21 +42,40 @@ public class CarService {
     public RentalInfo rentCar(User user, String vin, LocalDate startDate, LocalDate endDate) {
         Car car = carStorage.findCar(vin);
         List<Rental> rentalList = rentalStorage.getRentalList();
+
+        boolean wynajety = false;
         for (Rental rental : rentalList) {
             if (rental.getCar().getVin().equals(car.getVin())) {
-                System.out.println("Jest zarezerwowany.");
+                wynajety = true;
+
+            }
+        }
+
+        if (wynajety) {
+            System.out.println("Już jest zarezerwowany.");
+        } else {
+            rentalStorage.getRentalList().add(new Rental(user, car));
+            System.out.println("Uzytkownik: " + user.getUser() + " wynajal: " + vin + "(" + car.getKlasaSamochodu() + ")");
+            System.out.println("Ilosc dni: " + ChronoUnit.DAYS.between(startDate, endDate));
+            System.out.println("Cena: " + calculation(ChronoUnit.DAYS.between(startDate, endDate), car.getKlasaSamochodu()));
+        }
+
+        /*for (Rental rental : rentalList) {
+            if (rental.getCar().getVin().equals(car.getVin())) {
+                System.out.println("Już jest zarezerwowany.");
+               break;
             } else {
                 rentalStorage.getRentalList().add(new Rental(user, car));
                 System.out.println("Uzytkownik: " + user.getUser() + " wynajal: " + vin + "(" + car.getKlasaSamochodu() + ")");
                 System.out.println("Ilosc dni: " + ChronoUnit.DAYS.between(startDate, endDate));
                 System.out.println("Cena: " + calculation(ChronoUnit.DAYS.between(startDate, endDate), car.getKlasaSamochodu()));
-                return null;
-            }
-            //return new RentalInfo(price, startDate, endDate);
-        }
+                break;
+            }*/
+        //return new RentalInfo(price, startDate, endDate);
+
 
         return null;
-    }
+}
 
 
 //dodac metode rentCar

@@ -14,9 +14,8 @@ public class RentalStorage {
     }
 
     public RentalStorage() {
-        rentalList.add(new Rental(new User("adam"), new Car("bentley", "mondeo", "aabbcc", CarType.STANDARD)));
-        rentalList.add(new Rental(new User("jan"), new Car("opel", "astra", "aaddcc", CarType.STANDARD)));
+        rentalList.add(new Rental(new User("adam"), new Car("ford", "mondeo", "acf", CarType.STANDARD)));
+        rentalList.add(new Rental(new User("jan"), new Car("volkswagen", "touareg", "aabbcc", CarType.PREMIUM)));
     }
-
 
 }
