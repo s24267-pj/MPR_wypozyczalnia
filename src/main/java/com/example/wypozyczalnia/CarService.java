@@ -12,6 +12,7 @@ public class CarService {
     private final RentalStorage rentalStorage;
 
 
+
     public CarService(CarStorage carStorage, RentalStorage rentalStorage) {
         this.carStorage = carStorage;
         this.rentalStorage = rentalStorage;
@@ -41,13 +42,19 @@ public class CarService {
     //do parametrow dodac LocalDate, StartDate, EndDate
     public RentalInfo rentCar(User user, String vin, LocalDate startDate, LocalDate endDate) {
         Car car = carStorage.findCar(vin);
+        long days = ChronoUnit.DAYS.between(startDate, endDate);
         List<Rental> rentalList = rentalStorage.getRentalList();
+
+        if (days < 0){
+            System.out.println("startDate jest wieksze od endDate.");
+        return null;}
 
         boolean wynajety = false;
         for (Rental rental : rentalList) {
             if (rental.getCar().getVin().equals(car.getVin())) {
                 wynajety = true;
 
+                break;
             }
         }
 
@@ -56,8 +63,8 @@ public class CarService {
         } else {
             rentalStorage.getRentalList().add(new Rental(user, car));
             System.out.println("Uzytkownik: " + user.getUser() + " wynajal: " + vin + "(" + car.getKlasaSamochodu() + ")");
-            System.out.println("Ilosc dni: " + ChronoUnit.DAYS.between(startDate, endDate));
-            System.out.println("Cena: " + calculation(ChronoUnit.DAYS.between(startDate, endDate), car.getKlasaSamochodu()));
+            System.out.println("Ilosc dni: " + days);
+            System.out.println("Cena: " + calculation(days, car.getKlasaSamochodu()));
         }
 
         /*for (Rental rental : rentalList) {
@@ -71,10 +78,10 @@ public class CarService {
                 System.out.println("Cena: " + calculation(ChronoUnit.DAYS.between(startDate, endDate), car.getKlasaSamochodu()));
                 break;
             }*/
-        //return new RentalInfo(price, startDate, endDate);
+        return new RentalInfo(calculation(days, car.getKlasaSamochodu()), startDate, endDate);
 
 
-        return null;
+        //return null;
 }
 
 
