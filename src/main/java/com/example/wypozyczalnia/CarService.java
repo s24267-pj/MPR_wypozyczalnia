@@ -12,7 +12,6 @@ public class CarService {
     private final RentalStorage rentalStorage;
 
 
-
     public CarService(CarStorage carStorage, RentalStorage rentalStorage) {
         this.carStorage = carStorage;
         this.rentalStorage = rentalStorage;
@@ -37,17 +36,20 @@ public class CarService {
         }
     }
 
-
-    //zwroc RentalInfo
-    //do parametrow dodac LocalDate, StartDate, EndDate
     public RentalInfo rentCar(User user, String vin, LocalDate startDate, LocalDate endDate) {
         Car car = carStorage.findCar(vin);
         long days = ChronoUnit.DAYS.between(startDate, endDate);
         List<Rental> rentalList = rentalStorage.getRentalList();
 
-        if (days < 0){
+        if (car == null) {
+            System.out.println("Numer VIN nie istnieje.");
+            return null;
+        }
+
+        if (days < 0) {
             System.out.println("startDate jest wieksze od endDate.");
-        return null;}
+            return null;
+        }
 
         boolean wynajety = false;
         for (Rental rental : rentalList) {
@@ -82,13 +84,5 @@ public class CarService {
 
 
         //return null;
-}
-
-
-//dodac metode rentCar
-//Sprawdzic czy istneje samchod z podanym vin
-//jak tak to wynajmij
-//jak nie to zwroc null
-//wypisz na ekran tylko gdy uda sie wynajac
-//
+    }
 }

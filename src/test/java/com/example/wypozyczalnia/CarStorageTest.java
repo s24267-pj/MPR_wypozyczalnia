@@ -8,7 +8,7 @@ public class CarStorageTest {
     private CarStorage carStorage = new CarStorage();
 
 @Test
-    void Test() {
+    void shouldNotFindCar() {
         //GIVEN
         String vin = "zzzz";
 
