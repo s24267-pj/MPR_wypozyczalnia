@@ -38,7 +38,7 @@ public class CarServiceTest {
     }
 
     @Test
-    void shouldNoRentCar_AlreadRented() {
+    void shouldNotRentCar_AlreadRented() {
         RentalInfo rentalInfo = carService.rentCar(new User("aaa"),
                 "ddeeff",
                 LocalDate.of(2022, 12, 1),
