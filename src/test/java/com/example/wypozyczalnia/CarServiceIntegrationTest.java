@@ -9,8 +9,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 class CarServiceIntegrationTest {
@@ -24,19 +27,15 @@ class CarServiceIntegrationTest {
 
     @Test
     void shouldNotFindCar() {
-        when
+        when(carStorage.getCarList()).thenReturn(List.of(new Car("Ford", "Mondeo", "aarr", CarType.PREMIUM)));
+        assertThat(carStorage.findCar("aa")).isNull();
 
     }
+
     @Test
-    void shouldNotRentCar_AlreadRented() {
-        RentalInfo rentalInfo = carService.rentCar(new User("aaa"),
-                "aabbcc",
-                LocalDate.of(2022, 12, 1),
-                LocalDate.of(2022, 12, 10));
-
-
-        //THEN
-        Assertions.assertNotNull(rentalInfo, "FAILED: auto zostało juz wynajete.");
+    void shouldNotRentCar_AlreadyRented() {
+        when(rentalStorage.getRentalList()).thenReturn(List.of(new Rental(new User("Damian"), (new Car("Ford", "Mondeo", "aarr", CarType.PREMIUM)))));
+        assertThat()
     }
 
 
